@@ -34,15 +34,15 @@ class FakultasController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'nama' => 'required|unique:fakultas'
+            'nama' => 'required|unique:fakultas',
+            'singkatan' => 'required|max:4'
         ]);
-
-        $result = Fakultas::create($validate); // simpan ke tabel fakultas
-        if($result){
-            $data['success'] = true;
-            $data['message'] = "Data fakultas berhasil disimpan";
-            $data['result'] = $result;
-            return response()->json($data, Response::HTTP_CREATED);
+    
+        $fakultas = Fakultas::create($validate);
+        if($fakultas){
+            $response['success'] = true;
+            $response['message'] = 'Fakultas berhasil ditambahkan.';
+            return response()->json($response, Response::HTTP_CREATED);
         }
     }
 
